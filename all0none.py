@@ -7,8 +7,10 @@ import json
 import csv
 import pandas as pd
 
+from link import source_link
+
 # ссылка без ?page=
-source_link = 'https://kaspi.kz/shop/search/?text&q=%3Acategory%3ACategories%3AallMerchants%3ABublgum&sort=relevance&filteredByCategory=false'
+source_link = source_link
 # link_to_pickle_file = 'links'
 
 # filename
