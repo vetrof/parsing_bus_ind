@@ -6,11 +6,13 @@ from bs4 import BeautifulSoup as bs
 import json
 import csv
 import pandas as pd
+from selenium.webdriver.chrome.options import Options
 
-from link import source_link
+from link import source_link, max_page
 
 # ссылка без ?page=
 source_link = source_link
+max_page = max_page
 # link_to_pickle_file = 'links'
 
 # filename
@@ -19,7 +21,7 @@ file_name = f"parsing_{t.tm_year}_{t.tm_mon}_{t.tm_mday}_{t.tm_hour}_{t.tm_min}"
 # file_name = f"parsing_2023_5_14_20_48"
 
 def main():
-    links = get_pages_links(source_link)
+    links = get_pages_links(source_link, max_page)
     pickle_links(links)
 
     link_list = unpickle_file(file_name)
@@ -30,7 +32,7 @@ def main():
     csv_to_exel()
 
 
-def get_pages_links(source):
+def get_pages_links(source, max_page):
     session = HTMLSession()
     num_page = 1
     links_prod = []
@@ -54,7 +56,7 @@ def get_pages_links(source):
         print('saved links: \n', link_appender)
         print('\n**********************\n')
 
-        if len(link_appender) == 0:
+        if len(link_appender) == 0 or num_page == max_page:
             return links_prod
         else:
             links_prod += link_appender
@@ -93,7 +95,10 @@ def get_data_and_save(link):
         try:
 
             # load page
-            browser = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")
+
+            browser = webdriver.Chrome(options=chrome_options)
             browser.get(link)
             source_data = browser.page_source
 
