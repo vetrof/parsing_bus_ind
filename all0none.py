@@ -10,6 +10,9 @@ from selenium.webdriver.chrome.options import Options
 
 from link import source_link, max_page
 
+# TODO настроить запуск по расписанию
+# TODO настроить отправку по email
+
 # ссылка без ?page=
 source_link = source_link
 max_page = max_page
