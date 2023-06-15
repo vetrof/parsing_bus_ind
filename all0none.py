@@ -27,12 +27,12 @@ def main():
     links = get_pages_links(source_link, max_page)
     pickle_links(links)
 
-    link_list = unpickle_file(file_name)
-    for count, link in enumerate(link_list):
-        print(f'{count}, -{len(link_list) - count}, {link}')
-        get_data_and_save(link)
-
-    csv_to_exel()
+    # link_list = unpickle_file(file_name)
+    # for count, link in enumerate(link_list):
+    #     print(f'{count}, -{len(link_list) - count}, {link}')
+    #     get_data_and_save(link)
+    #
+    # csv_to_exel()
 
 
 def get_pages_links(source, max_page):
