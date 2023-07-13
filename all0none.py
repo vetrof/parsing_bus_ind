@@ -21,7 +21,6 @@ max_page = max_page
 # filename
 t = time.localtime()
 file_name = f"parsing_{t.tm_year}_{t.tm_mon}_{t.tm_mday}_{t.tm_hour}_{t.tm_min}"
-# file_name = f"parsing_2023_5_14_20_48"
 
 def main():
     links = get_pages_links(source_link, max_page)
@@ -41,30 +40,42 @@ def get_pages_links(source, max_page):
     links_prod = []
 
     while True:
-
-        link_appender = []
+        link_appender = []  # список ссылок
         prefix = f'&page={num_page}'
-        link = source + prefix
+        base_link = source
 
-        r = session.get(link)
-
-        for i in r.html.links:
-            if i.startswith('https://kaspi.kz/shop/p/'):
-                if i.endswith('reviews'):
-                    continue
-                link_appender.append(i)
-
-        print('num page: ', num_page)
-        print('num link on page: ', len(link_appender))
-        print('saved links: \n', link_appender)
-        print('\n**********************\n')
-
-        if len(link_appender) == 0 or num_page == max_page:
-            return links_prod
-        else:
-            links_prod += link_appender
-        # time.sleep(1)
+        link = f'{base_link}{prefix}'
         num_page += 1
+        print(link)
+        if num_page == 10:
+            break
+
+        # print(num_page)
+        # break
+
+
+        # r = session.get(link)
+
+        # for i in r.html.links:
+        #
+        #     print('i.startswith', i.startswith)
+        #
+        #     if i.startswith('https://kaspi.kz/shop/'):
+        #         if i.endswith('reviews'):
+        #             continue
+        #         link_appender.append(i)
+        #
+        # print('num page: ', num_page)
+        # print('num link on page: ', len(link_appender))
+        # print('saved links: \n', link_appender)
+        # print('\n********** you a here ************\n')
+
+        # if len(link_appender) == 0 or num_page == max_page:
+        #     return links_prod
+        # else:
+        #     links_prod += link_appender
+        # # time.sleep(1)
+        # num_page += 1
 
 
 def pickle_links(links):
